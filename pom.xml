@@ -140,16 +140,15 @@
                         <artifactId>flyway-database-postgresql</artifactId>
                         <version>11.17.2</version>
                     </dependency>
-
-                    <!-- JDBC driver untuk codegen/plugin -->
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
-                        <version>42.7.8</version>
+                        <version>42.7.4</version>
                     </dependency>
                 </dependencies>
             </plugin>
 
+            <!-- JDBC driver untuk codegen/plugin -->
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
@@ -164,24 +163,23 @@
                     </jdbc>
 
                     <generator>
+                        <name>org.jooq.codegen.JavaGenerator</name>
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <inputSchema>public</inputSchema>
                         </database>
-
                         <target>
-                            <packageName>com.dimata.payroll.jooq</packageName>
+                            <packageName>com.dimata.service.payroll.jooq</packageName>
                             <directory>target/generated-sources/jooq</directory>
                         </target>
                     </generator>
-
                 </configuration>
 
                 <dependencies>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
-                        <version>42.7.8</version>
+                        <version>42.7.4</version>
                     </dependency>
                 </dependencies>
             </plugin>
