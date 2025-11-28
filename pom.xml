@@ -33,7 +33,7 @@
         <db.port>5432</db.port>
         <db.name>payroll_db</db.name>
         <db.user>postgres</db.user>
-        <db.password>postgres</db.password>
+        <db.password>root</db.password>
         <db.url>jdbc:postgresql://${db.host}:${db.port}/${db.name}</db.url>
     </properties>
 
