@@ -20,7 +20,7 @@ public class EmployeeRepository {
 
   private final DSLContext jooq;
 
-  public List<EmployeeSummaryResponse> getEmployees() {
+  public List<EmployeeSummaryResponse> findAll() {
     return jooq
             .select(
                     EMPLOYEE.ID,
@@ -32,7 +32,7 @@ public class EmployeeRepository {
             .fetchInto(EmployeeSummaryResponse.class);
   }
 
-  public EmployeeDetailResponse getEmployee(UUID id) {
+  public EmployeeDetailResponse getById(UUID id) {
     return jooq
             .select(
                     EMPLOYEE.ID,
@@ -48,10 +48,16 @@ public class EmployeeRepository {
             .fetchOneInto(EmployeeDetailResponse.class);
   }
 
-  public EmployeeDetailResponse createEmployee(EmployeeCreateRequest employee) {
-    UUID id = UUID.randomUUID();
+  public Boolean existsByEmail(String email) {
+    return jooq.fetchExists(
+            jooq.selectOne()
+              .from(EMPLOYEE)
+              .where(EMPLOYEE.EMAIL.eq(email))
+    );
+  }
 
-    try{
+  public EmployeeDetailResponse save(EmployeeCreateRequest employee) {
+    UUID id = UUID.randomUUID();
       jooq
         .insertInto(EMPLOYEE)
         .set(EMPLOYEE.ID, id)
@@ -62,11 +68,8 @@ public class EmployeeRepository {
         .set(EMPLOYEE.SALARY, employee.salary())
         .set(EMPLOYEE.STATUS, employee.status())
         .execute();
-    } catch (DataIntegrityViolationException ex) {
-        throw new DuplicateEmailException(employee.email());
-    }
 
-    return getEmployee(id);
+    return getById(id);
   }
 
 }
