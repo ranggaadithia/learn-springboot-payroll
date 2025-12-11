@@ -3,10 +3,8 @@ package com.dimata.service.payroll.repository.master;
 import com.dimata.service.payroll.dto.request.master.employee.EmployeeCreateRequest;
 import com.dimata.service.payroll.dto.response.master.employee.EmployeeDetailResponse;
 import com.dimata.service.payroll.dto.response.master.employee.EmployeeSummaryResponse;
-import com.dimata.service.payroll.exception.DuplicateEmailException;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import static com.dimata.service.payroll.jooq.tables.Employee.EMPLOYEE;
 
