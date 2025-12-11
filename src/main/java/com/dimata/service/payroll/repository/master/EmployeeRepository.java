@@ -3,7 +3,7 @@ package com.dimata.service.payroll.repository.master;
 import com.dimata.service.payroll.dto.request.master.employee.EmployeeCreateRequest;
 import com.dimata.service.payroll.dto.response.master.employee.EmployeeDetailResponse;
 import com.dimata.service.payroll.dto.response.master.employee.EmployeeSummaryResponse;
-import lombok.RequiredArgsConstructor;
+import com.dimata.service.payroll.repository.BaseRepository;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import static com.dimata.service.payroll.jooq.tables.Employee.EMPLOYEE;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-@RequiredArgsConstructor
-public class EmployeeRepository {
-
-  private final DSLContext jooq;
+public class EmployeeRepository extends BaseRepository {
+  public EmployeeRepository(DSLContext jooq) {
+    super(jooq);
+  }
 
   public List<EmployeeSummaryResponse> findAll() {
     return jooq
@@ -55,7 +55,7 @@ public class EmployeeRepository {
   }
 
   public EmployeeDetailResponse save(EmployeeCreateRequest employee) {
-    UUID id = UUID.randomUUID();
+      UUID id = generatedId();
       jooq
         .insertInto(EMPLOYEE)
         .set(EMPLOYEE.ID, id)
